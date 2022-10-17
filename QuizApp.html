@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Simpsons Quiz</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+        :root {
+            --hue-neutral: 550;
+            --hue-wrong: 0;
+            --hue-correct: 145;
+        }
+        body {
+            --hue: var(--hue-neutral);
+            padding: 0;
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: hsl(var(--hue), 100%, 20%);
+        }
+        body.correct {
+            --hue: var(--hue-correct);
+        }
+        body.wrong {
+            --hue: var(--hue-wrong);
+        }
+        .container {
+            width: 600px;
+            max-width: 80%;
+            background-color: whitesmoke;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 0 10px 2px;
+            text-align: center;
+        }
+        .radio-container {
+            margin: 20px 0;
+        }
+        .radio {
+            margin-bottom: 10px;
+        }
+        label {
+            padding: 2px;
+            border-radius: 2px;
+        }
+        label:hover, .radio:hover {
+            cursor: pointer;
+            color: whitesmoke;
+            background-color: hsl(var(--hue), 100%, 40%);
+        }
+        .btn {
+            --hue: var(--hue-neutral);
+            border: 1px solid hsl(var(--hue), 100%, 30%);
+            background-color: hsl(var(--hue), 100%, 50%);
+            border-radius: 5px;
+            padding: 5px 10px;
+            color: whitesmoke;
+            outline: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 10px 20px;
+        }
+        .btn:hover {
+            border-color: black;
+            cursor: pointer;
+            background-color: hsl(var(--hue), 100%, 40%);
+        }        
+        .controls {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="question-container" class="hide">
+            <div id="quiz-header">The Simpson's Quiz</div><br>
+            <div id="quiz-count"></div>
+            <div id="question">Question</div>
+            <div id="radio-container" class="radio-container">
+                <input type="radio" name="answer" id="a" class="radio">
+                <label for="a" id="answer-a"></label><br>
+                <input type="radio" name="answer" id="b" class="radio">
+                <label for="b" id="answer-b"></label><br>
+                <input type="radio" name="answer" id="c" class="radio">
+                <label for="c" id="answer-c"></label><br>
+                <input type="radio" name="answer" id="d" class="radio">
+                <label for="d" id="answer-d"></label><br>
+            </div>
+        </div>
+        <div class="controls">
+            <button id="start-btn" class="btn">Start</button>
+            <button id="prev-btn" class="btn hide">< Prev</button>
+            <button id="next-btn" class="btn hide">Next ></button>
+        </div>
+    </div>
+</body>
+<script>
+    const quizData = [
+        {
+            question: 'In what year did the first episode of The Simpsons air?',       
+            a: '1985',
+            b: '1991',
+            c: '1989',
+            d: '1981',
+            answer: 'c'
+        },
+        {
+            question: 'What\'s the name of the Simpsons\' pet dog?',
+            a: 'Itchy',
+            b: 'Belvedere',
+            c: 'Duffy',
+            d: 'Santa\'s Little Helper',
+            answer: 'd'
+        },
+        {
+            question: 'Which cartoon inspired The Itchy & Scratchy Show?',
+            a: 'Looney Tunes',
+            b: 'Tom and Jerry',
+            c: 'Biker Mice',
+            d: 'Dexter\'s Laboratory',
+            answer: 'b'
+        },
+        {
+            question: 'What\'s Marge\'s natural hair colour?',
+            a: 'Blonde',
+            b: 'Blue',
+            c: 'Grey',
+            d: 'Black',
+            answer: 'c'
+        },
+        {
+            question: 'Who composed The Simpsons\' theme tune?',
+            a: 'Danny Brasco',
+            b: 'Danny Elfman',
+            c: 'Beethoven',
+            d: 'Lady Gaga',
+            answer: 'b'
+        },
+        {
+            question: 'How many cats have the Simpsons had?',
+            a: 'One',
+            b: 'Ten',
+            c: 'Five',
+            d: 'Eight',
+            answer: 'c'
+        },
+        {
+            question: 'What\'s Mr Burns\' catchphrase?',
+            a: 'Splendid!',
+            b: 'Groovy!',
+            c: 'Excellent!',
+            d: 'Ay Caramba!',
+            answer: 'c'
+        },
+        {
+            question: 'How many times has Krusty the Clown been married?',
+            a: 'Fifteen',
+            b: 'One',
+            c: 'Eight',
+            d: 'Twelve',
+            answer: 'a'
+        },
+        {
+            question: 'Which Springfield resident often appears as the Devil?',
+            a: 'Reverend Lovejoy',
+            b: 'Homer Simpson',
+            c: 'Montgomery Burns',
+            d: 'Ned Flanders',
+            answer: 'd'
+        },
+        {
+            question: 'What\'s the name of the retirement home where Homer\'s father, Abraham Simpson, lives?',
+            a: 'Springfield Care Home',
+            b: 'Springfield Retirement Castle',
+            c: 'Springfield Home for the Nearly Dead',
+            d: 'Springfield Old Folks Home',
+            answer: 'b'
+        },
+        {
+            question: 'How many children do Apu and Manjula have?',
+            a: 'Nine',
+            b: 'Eight',
+            c: 'Sixteen',
+            d: 'Twelve',
+            answer: 'b'
+        },
+        {
+            question: 'What\'s Marge\'s maiden name?',
+            a: 'Bartholemew',
+            b: 'Bordeux',
+            c: 'Bouvier',
+            d: 'Boris',
+            answer: 'c'
+        }
+    ]
+
+    const startButton = document.getElementById('start-btn')
+    const prevBtn = document.getElementById('prev-btn')
+    const nextBtn = document.getElementById('next-btn')
+    const questionContainer = document.getElementById('question-container')
+    const questionElement = document.getElementById('question')    
+    const answerRadios = document.querySelectorAll('.radio')
+    const answerA = document.getElementById('answer-a')
+    const answerB = document.getElementById('answer-b')
+    const answerC = document.getElementById('answer-c')
+    const answerD = document.getElementById('answer-d')
+    const quizCount = document.getElementById('quiz-count')
+    
+    let score = 0;
+    let answered
+    let currentQuestionIndex = 0
+    
+
+    startButton.addEventListener('click', startQuiz)
+
+      
+    function startQuiz() {
+        startButton.classList.add('hide')
+        questionContainer.classList.remove('hide')
+        nextQuestion()
+    }
+
+    function nextQuestion() {
+        resetState()
+        showQuestion(quizData[currentQuestionIndex])
+        if (currentQuestionIndex === quizData.length - 1) {
+            nextBtn.innerText = 'Finish'
+        }
+        quizCount.innerHTML = `<h3>Question ${currentQuestionIndex + 1} of ${quizData.length}</h3>`
+    }
+
+    function prevQuestion () {
+        resetState()
+        if (currentQuestionIndex === 1) {
+            prevBtn.classList.add('hide')
+        }
+        showQuestion(quizData[currentQuestionIndex - 1])
+        quizCount.innerHTML = `<h3>Question ${currentQuestionIndex} of ${quizData.length}</h3>`
+    }
+        
+    function showQuestion(question) {
+        questionElement.innerText = question.question        
+        answerA.innerHTML = question.a;
+        answerB.innerHTML = question.b;
+        answerC.innerHTML = question.c;
+        answerD.innerHTML = question.d;        
+        selectedAnswer()
+    }
+
+    nextBtn.addEventListener('click', () => {
+        if (answered) {
+            if (answered === quizData[currentQuestionIndex].answer) {
+                score++
+            }
+            currentQuestionIndex++                
+            if (currentQuestionIndex < quizData.length) {
+                prevBtn.classList.remove('hide')
+                nextQuestion()
+            } else {
+                questionContainer.innerHTML = `<h2>You answered ${score} out of ${quizData.length} questions correctly</h2>
+                
+                <button class='btn' onclick ='location.reload()'>Restart</button>`
+                nextBtn.classList.add('hide')
+                prevBtn.classList.add('hide')                    
+            }
+        }
+    })
+
+    prevBtn.addEventListener('click', () => {
+        prevQuestion()
+        currentQuestionIndex--
+        if (score > 0) {
+            score--
+        }
+    })
+
+    function resetState() {
+        nextBtn.innerText ='Next >'
+        nextBtn.classList.add('hide')
+        answerRadios.forEach(answerRadio => answerRadio.checked = false)
+    }
+
+    
+    function selectedAnswer() {
+        answerRadios.forEach(answerRadio => {
+            answerRadio.addEventListener('click', () => {                
+                nextBtn.classList.remove('hide')
+                if (answerRadio.checked) {
+                    answered = answerRadio.id
+                }
+                return answered
+            })
+        })
+    }
+ 
+    
+</script>
+</html>
