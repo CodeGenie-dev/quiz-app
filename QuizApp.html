@@ -6,9 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Simpsons Quiz</title>
     <style>
+        @font-face {
+            font-family: 'akbar_plain';
+            src: url('./simpsonfont-webfont.woff2') format('woff2'),
+                url('./simpsonfont-webfont.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+
+        }
         *, *::before, *::after {
             box-sizing: border-box;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-family: 'akbar_plain', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         }
         :root {
             --hue-neutral: 550;
@@ -24,7 +32,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: hsl(var(--hue), 100%, 20%);
+            /* background-color: hsl(var(--hue), 100%, 20%); */
+            background-image: url('./springfield.png');
+            background-color: #fefdfe;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            position: relative;
         }
         body.correct {
             --hue: var(--hue-correct);
@@ -40,6 +54,12 @@
             padding: 10px;
             box-shadow: 0 0 10px 2px;
             text-align: center;
+        }
+        #quiz-header {
+            font-size: 30px;
+        }
+        #audio {
+            display: none;
         }
         .radio-container {
             margin: 20px 0;
@@ -81,12 +101,35 @@
         .hide {
             display: none;
         }
+        .img-mid {
+            position: absolute;
+            bottom: 0;
+            width: 50%;
+            max-width: 350px;
+        }
+        .question-img {
+            position: absolute;
+            bottom: 0;
+            width: 50%;
+            max-width: 250px;
+        }
+        video.playing {
+            opacity: 1;
+            transition: opacity 3s ease;
+        }
+
+        video {
+            opacity: 0;
+            transition: opacity 3s ease-out;
+            position: absolute;
+            height: 100vh;
+        }
     </style>
 </head>
-<body>
+<body onload="autoPlay()" id="bodyContainer">
     <div class="container">
         <div id="question-container" class="hide">
-            <div id="quiz-header">The Simpson's Quiz</div><br>
+            <div id="quiz-header">The Simpsons Quiz</div><br>
             <div id="quiz-count"></div>
             <div id="question">Question</div>
             <div id="radio-container" class="radio-container">
@@ -106,8 +149,60 @@
             <button id="next-btn" class="btn hide">Next ></button>
         </div>
     </div>
+    <img id="img-one" class="img-mid" src="./startImage.png" alt="">
+    <audio id="audio" src="./theSimpsonsAudio.mp3" preload="auto"></audio>
 </body>
 <script>
+
+    // Create and reference video element
+    const vid = document.createElement('video');
+    const audio = document.getElementById("audio");
+
+    // Add class for styling
+    vid.classList.add('playing');
+
+    // Add a src to .vid
+    vid.src = './theSimpsons.mp4';
+
+    // Load .vid
+    vid.muted = true;
+    vid.load();
+
+    // Add .vid to body
+    document.body.appendChild(vid);
+
+    // Play video
+    vid.play();
+
+    // Play audio
+    function autoPlay() {
+        audio.play();
+    }
+
+    /* Register ended event to vid
+    || After video has ended...
+    */
+    vid.addEventListener('ended', function(e) {
+
+        // Pause vid
+        // vid.pause()
+
+        /* Reset time played. This method used
+        || along with .pause() is equivelant to "stop"
+        */
+        vid.currentTime = 0;
+
+        // Simulate a `non-playing state`
+        vid.classList.remove('playing');
+
+        /* Delay the call to remove vid in order
+        || to preserve the fade ouyt effect.
+        */
+        setTimeout(function() {
+                document.body.removeChild(vid);
+            }, 2000);
+    }, false);
+
     const quizData = [
         {
             question: 'In what year did the first episode of The Simpsons air?',       
@@ -115,7 +210,8 @@
             b: '1991',
             c: '1989',
             d: '1981',
-            answer: 'c'
+            answer: 'c',
+            img: './homerDonut.png'
         },
         {
             question: 'What\'s the name of the Simpsons\' pet dog?',
@@ -123,7 +219,8 @@
             b: 'Belvedere',
             c: 'Duffy',
             d: 'Santa\'s Little Helper',
-            answer: 'd'
+            answer: 'd',
+            img: './slh.png'
         },
         {
             question: 'Which cartoon inspired The Itchy & Scratchy Show?',
@@ -131,7 +228,8 @@
             b: 'Tom and Jerry',
             c: 'Biker Mice',
             d: 'Dexter\'s Laboratory',
-            answer: 'b'
+            answer: 'b',
+            img: './ins.png'
         },
         {
             question: 'What\'s Marge\'s natural hair colour?',
@@ -139,7 +237,8 @@
             b: 'Blue',
             c: 'Grey',
             d: 'Black',
-            answer: 'c'
+            answer: 'c',
+            img: './marge.png'
         },
         {
             question: 'Who composed The Simpsons\' theme tune?',
@@ -147,7 +246,8 @@
             b: 'Danny Elfman',
             c: 'Beethoven',
             d: 'Lady Gaga',
-            answer: 'b'
+            answer: 'b',
+            img: './theSimpsons2.png'
         },
         {
             question: 'How many cats have the Simpsons had?',
@@ -155,7 +255,8 @@
             b: 'Ten',
             c: 'Five',
             d: 'Eight',
-            answer: 'c'
+            answer: 'c',
+            img: './mns.png'
         },
         {
             question: 'What\'s Mr Burns\' catchphrase?',
@@ -163,7 +264,8 @@
             b: 'Groovy!',
             c: 'Excellent!',
             d: 'Ay Caramba!',
-            answer: 'c'
+            answer: 'c',
+            img: './Burns.png'
         },
         {
             question: 'How many times has Krusty the Clown been married?',
@@ -206,7 +308,8 @@
             answer: 'c'
         }
     ]
-
+    
+    const bodyContainer = document.getElementById('bodyContainer')
     const startButton = document.getElementById('start-btn')
     const prevBtn = document.getElementById('prev-btn')
     const nextBtn = document.getElementById('next-btn')
@@ -218,10 +321,12 @@
     const answerC = document.getElementById('answer-c')
     const answerD = document.getElementById('answer-d')
     const quizCount = document.getElementById('quiz-count')
+    const img = document.createElement('img')
+    const imgOne = document.getElementById('img-one')
     
     let score = 0;
-    let answered
-    let currentQuestionIndex = 0
+    let answered;
+    let currentQuestionIndex = 0;
     
 
     startButton.addEventListener('click', startQuiz)
@@ -231,6 +336,7 @@
         startButton.classList.add('hide')
         questionContainer.classList.remove('hide')
         nextQuestion()
+        imgOne.classList.add('hide')
     }
 
     function nextQuestion() {
@@ -256,7 +362,9 @@
         answerA.innerHTML = question.a;
         answerB.innerHTML = question.b;
         answerC.innerHTML = question.c;
-        answerD.innerHTML = question.d;        
+        answerD.innerHTML = question.d;
+        img.src = question.img
+        bodyContainer.appendChild(img).classList.add('question-img')  
         selectedAnswer()
     }
 
