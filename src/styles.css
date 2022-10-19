@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'akbar_plain';
-  src: url('./simpsonfont-webfont.woff2') format('woff2'),
-      url('./simpsonfont-webfont.woff') format('woff');
+  src: url('../simpsonfont-webfont.woff2') format('woff2'),
+      url('../simpsonfont-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 
@@ -25,7 +25,7 @@ body {
   justify-content: center;
   align-items: center;
   /* background-color: hsl(var(--hue), 100%, 20%); */
-  background-image: url('./assets/images/springfield.png');
+  background-image: url('../assets/images/springfield.png');
   background-color: #fefdfe;
   background-repeat: no-repeat;
   background-size: cover;

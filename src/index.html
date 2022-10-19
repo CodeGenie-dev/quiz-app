@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">    
+    <title>The Simpsons Quiz</title>
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+</head>
+<body onload="autoPlay()" class="fireworksDiv" id="bodyContainer">
+    <div class="headerContainer">
+        <img class="logo" src="../assets/images/theSimpsonsLogo.png" alt="">
+        <img class="quiz" src="../assets/images/quiz.png" alt="">
+    </div>
+    <div class="container">
+        <div id="question-container" class="hide">
+            <!-- <div id="quiz-header">The Simpsons Quiz</div><br> -->
+            <div id="quiz-count"></div>
+            <div id="question">Question</div>
+            <div id="radio-container" class="radio-container">
+                <input type="radio" name="answer" id="a" class="radio">
+                <label for="a" id="answer-a"></label><br>
+                <input type="radio" name="answer" id="b" class="radio">
+                <label for="b" id="answer-b"></label><br>
+                <input type="radio" name="answer" id="c" class="radio">
+                <label for="c" id="answer-c"></label><br>
+                <input type="radio" name="answer" id="d" class="radio">
+                <label for="d" id="answer-d"></label><br>
+            </div>
+        </div>
+        <div class="controls">
+            <button id="start-btn" class="btn">Start</button>
+            <button id="prev-btn" class="btn hide">< Prev</button>
+            <button id="next-btn" class="btn hide">Next ></button>
+        </div>
+    </div>
+    <img id="img-one" class="img-start" src="../assets/images/startImage.png" alt="">
+    <audio id="audio1" class="hide" src="../assets/sounds/theSimpsonsAudio.mp3" preload="auto"></audio>
+    <audio id="audio2" class="hide" src="../assets/sounds/haha.mp3" preload="auto"></audio>
+    <audio id="audio3" class="hide" src="../assets/sounds/scream.mp3" preload="auto"></audio>
+    <audio id="audio4" class="hide" src="../assets/sounds/krusty.mp3" preload="auto"></audio>
+    <audio id="audio5" class="hide" src="../assets/sounds/doh.mp3" preload="auto"></audio>
+    <audio id="audio6" class="hide" src="../assets/sounds/excellent.mp3" preload="auto"></audio>
+    <audio id="audio7" class="hide" src="../assets/sounds/woohoo.mp3" preload="auto"></audio>
+    <audio id="audio8" class="hide" src="../assets/sounds/loser1.mp3" preload="auto"></audio>
+    <audio id="audio9" class="hide" src="../assets/sounds/loser2.mp3" preload="auto"></audio>
+    <audio id="audio10" class="hide" src="../assets/sounds/iWin.mp3" preload="auto"></audio>
+    <audio id="audio11" class="hide" src="../assets/sounds/victory.mp3" preload="auto"></audio>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/fireworks-js@latest/dist/fireworks.js"></script>
+<script src="index.js">
+    
+    
+ 
+    
+</script>
+</html>
