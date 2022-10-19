@@ -4,143 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">    
     <title>The Simpsons Quiz</title>
-    <style>
-        @font-face {
-            font-family: 'akbar_plain';
-            src: url('./simpsonfont-webfont.woff2') format('woff2'),
-                url('./simpsonfont-webfont.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-
-        }
-        *, *::before, *::after {
-            box-sizing: border-box;
-            font-family: 'akbar_plain', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        }
-        :root {
-            --hue-neutral: 550;
-            --hue-wrong: 0;
-            --hue-correct: 145;
-        }
-        body {
-            --hue: var(--hue-neutral);
-            padding: 0;
-            margin: 0;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* background-color: hsl(var(--hue), 100%, 20%); */
-            background-image: url('./assets/images/springfield.png');
-            background-color: #fefdfe;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            overflow: hidden;
-        }
-        body.correct {
-            --hue: var(--hue-correct);
-        }
-        body.wrong {
-            --hue: var(--hue-wrong);
-        }
-        .container {
-            width: 600px;
-            max-width: 80%;
-            background-color: whitesmoke;
-            border-radius: 5px;
-            padding: 10px;
-            box-shadow: 0 0 10px 2px;
-            text-align: center;
-        }
-        #quiz-header {
-            font-size: 30px;
-        }
-        .radio-container {
-            margin: 20px 0;
-        }
-        .radio {
-            margin-bottom: 10px;
-        }
-        label {
-            padding: 2px;
-            border-radius: 2px;
-        }
-        label:hover, .radio:hover {
-            cursor: pointer;
-            color: whitesmoke;
-            background-color: hsl(var(--hue), 100%, 40%);
-        }
-        .btn {
-            --hue: var(--hue-neutral);
-            border: 1px solid hsl(var(--hue), 100%, 30%);
-            background-color: hsl(var(--hue), 100%, 50%);
-            border-radius: 5px;
-            padding: 5px 10px;
-            color: whitesmoke;
-            outline: none;
-            font-size: 1.5rem;
-            font-weight: bold;
-            padding: 10px 20px;
-        }
-        .btn:hover {
-            border-color: black;
-            cursor: pointer;
-            background-color: hsl(var(--hue), 100%, 40%);
-        }        
-        .controls {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
-        .hide {
-            display: none;
-        }
-        .img-start {
-            position: absolute;
-            bottom: 0;
-            width: 50%;
-            max-width: 350px;
-        }
-        .question-img {
-            position: absolute;
-            bottom: 0;
-            width: 50%;
-            max-width: 200px;
-        }
-        .img-left {
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 40%;
-            max-width: 350px;
-        }
-        .img-right {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            width: 40%;
-        }
-        video.playing {
-            opacity: 1;
-            transition: opacity 3s ease;
-        }
-
-        video {
-            opacity: 0;
-            transition: opacity 3s ease-out;
-            position: absolute;
-            height: 100vh;
-        }
-    </style>
+    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
 </head>
-<body onload="autoPlay()" id="bodyContainer">
+<body onload="autoPlay()" class="fireworksDiv" id="bodyContainer">
+    <div class="headerContainer">
+        <img class="logo" src="./assets/images/theSimpsonsLogo.png" alt="">
+        <img class="quiz" src="./assets/images/quiz.png" alt="">
+    </div>
     <div class="container">
         <div id="question-container" class="hide">
-            <div id="quiz-header">The Simpsons Quiz</div><br>
+            <!-- <div id="quiz-header">The Simpsons Quiz</div><br> -->
             <div id="quiz-count"></div>
             <div id="question">Question</div>
             <div id="radio-container" class="radio-container">
@@ -168,8 +43,16 @@
     <audio id="audio5" class="hide" src="./assets/sounds/doh.mp3" preload="auto"></audio>
     <audio id="audio6" class="hide" src="./assets/sounds/excellent.mp3" preload="auto"></audio>
     <audio id="audio7" class="hide" src="./assets/sounds/woohoo.mp3" preload="auto"></audio>
+    <audio id="audio8" class="hide" src="./assets/sounds/loser1.mp3" preload="auto"></audio>
+    <audio id="audio9" class="hide" src="./assets/sounds/loser2.mp3" preload="auto"></audio>
+    <audio id="audio10" class="hide" src="./assets/sounds/iWin.mp3" preload="auto"></audio>
+    <audio id="audio11" class="hide" src="./assets/sounds/victory.mp3" preload="auto"></audio>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/fireworks-js@latest/dist/fireworks.js"></script>
 <script>
+    
+    const fireworksDiv = document.querySelector('.fireworksDiv')
+    
 
     // Create and reference video element
     const vid = document.createElement('video');
@@ -180,6 +63,10 @@
     const dohAudio = document.getElementById("audio5")
     const excellentAudio = document.getElementById("audio6")
     const woohooAudio = document.getElementById("audio7")
+    const loser1Audio = document.getElementById("audio8")
+    const loser2Audio = document.getElementById("audio9")
+    const iWinAudio = document.getElementById("audio10")
+    const victoryAudio = document.getElementById("audio11")
 
 
     // Add class for styling
@@ -226,6 +113,68 @@
                 document.body.removeChild(vid);
             }, 2000);
     }, false);
+
+    const fireworks = new Fireworks(fireworksDiv, {
+        autoresize: true,
+        opacity: 0.5,
+        acceleration: 1.05,
+        friction: 0.97,
+        gravity: 1.5,
+        particles: 50,
+        traceLength: 3,
+        traceSpeed: 10,
+        explosion: 5,
+        intensity: 30,
+        flickering: 50,
+        lineStyle: 'round',
+        hue: {
+            min: 0,
+            max: 360
+        },
+        delay: {
+            min: 30,
+            max: 60
+        },
+        rocketsPoint: {
+            min: 50,
+            max: 50
+        },
+        lineWidth: {
+            explosion: {
+            min: 1,
+            max: 3
+            },
+            trace: {
+            min: 1,
+            max: 2
+            }
+        },
+        brightness: {
+            min: 50,
+            max: 80
+        },
+        sound: {
+            enabled: true,
+            files: [
+            './assets/sounds/firework1.mp3',
+            './assets/sounds/firework2.mp3',
+            './assets/sounds/firework3.mp3'
+            ],
+            volume: {
+            min: 4,
+            max: 8
+            }
+        },
+        decay: {
+            min: 0.015,
+            max: 0.03
+        },
+        mouse: {
+            click: false,
+            move: false,
+            max: 1
+        }
+    })
 
     const quizData = [
         {
@@ -497,8 +446,11 @@
                     img.classList.add('hide')
                     screamAudio.play();
                     setTimeout(function() {
-                       hahaAudio.play();
+                        hahaAudio.play();
                     }, 1000);
+                    setTimeout(function() {
+                        loser1Audio.play();
+                    }, 3000);
                 } else if (score > 10 && score <= 15) {
                     img2.src = './assets/images/doh.png'
                     bodyContainer.appendChild(img2).classList.add('img-left')
@@ -509,9 +461,12 @@
                     img.classList.add('hide')
                     dohAudio.play();
                     setTimeout(function() {
-                       krustyAudio.play();
+                        krustyAudio.play();
                     }, 1000);
-                } else if (score > 15) {
+                    setTimeout(function() {
+                        loser2Audio.play();
+                    }, 3000);
+                } else if (score > 15 && score <= 19) {
                     img2.src = './assets/images/excellent.png'
                     bodyContainer.appendChild(img2).classList.add('img-left')
 
@@ -523,6 +478,20 @@
                     setTimeout(function() {
                        excellentAudio.play();
                     }, 1000);
+                } else if (score == 20) {
+                    img2.src = './assets/images/excellent.png'
+                    bodyContainer.appendChild(img2).classList.add('img-left')
+
+                    img3.src = './assets/images/woohoo.png'
+                    bodyContainer.appendChild(img3).classList.add('img-right')
+
+                    img.classList.add('hide')
+                    iWinAudio.play();
+                    victoryAudio.play();
+                    setTimeout(function() {
+                       excellentAudio.play();
+                       fireworks.start()
+                    }, 7000);
                 }
             }
         }
