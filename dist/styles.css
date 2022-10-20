@@ -132,6 +132,7 @@ label:hover, .radio:hover {
 video.playing {
   opacity: 1;
   transition: opacity 3s ease;
+  overflow: hidden;
 }
 video {
   opacity: 0;

@@ -322,6 +322,7 @@ const img = document.createElement('img')
 const img2 = document.createElement('img')
 const img3 = document.createElement('img')
 const imgOne = document.getElementById('img-one')
+const BigText = document.createElement('h1')
 
 let score = 0;
 let answered;
@@ -377,13 +378,16 @@ nextBtn.addEventListener('click', () => {
             prevBtn.classList.remove('hide')
             nextQuestion()
         } else {
-            questionContainer.innerHTML = `<h2>You answered ${score} out of ${quizData.length} questions correctly</h2>
             
-            <button class='btn' onclick ='location.reload()'>Restart</button>`
             nextBtn.classList.add('hide')
             prevBtn.classList.add('hide')
             
             if (score <= 10) {
+              questionContainer.innerHTML = `
+              <h1>You got the Homer award! 🍩</h1>
+              <h2>You answered ${score} out of ${quizData.length} questions correctly</h2>
+            
+              <button class='btn' onclick ='location.reload()'>Restart</button>`
                 img2.src = '../assets/images/scream.png'
                 bodyContainer.appendChild(img2).classList.add('img-left')
 
@@ -399,6 +403,11 @@ nextBtn.addEventListener('click', () => {
                     loser1Audio.play();
                 }, 3000);
             } else if (score > 10 && score <= 15) {
+              questionContainer.innerHTML = `
+              <h1>You got the Barney award! 🍺</h1>
+              <h2>You answered ${score} out of ${quizData.length} questions correctly</h2>
+            
+              <button class='btn' onclick ='location.reload()'>Restart</button>`
                 img2.src = '../assets/images/doh.png'
                 bodyContainer.appendChild(img2).classList.add('img-left')
 
@@ -414,6 +423,11 @@ nextBtn.addEventListener('click', () => {
                     loser2Audio.play();
                 }, 3000);
             } else if (score > 15 && score <= 19) {
+              questionContainer.innerHTML = `
+              <h1>Well done! Here's a Krusty Burger 🍔</h1>
+              <h2>You answered ${score} out of ${quizData.length} questions correctly</h2>
+            
+              <button class='btn' onclick ='location.reload()'>Restart</button>`
                 img2.src = '../assets/images/excellent.png'
                 bodyContainer.appendChild(img2).classList.add('img-left')
 
@@ -426,6 +440,11 @@ nextBtn.addEventListener('click', () => {
                     excellentAudio.play();
                 }, 1000);
             } else if (score == 20) {
+                questionContainer.innerHTML = `
+                <h1>CONGRATULATIONS!!! 🏆</h1>
+                <h2>You acheived a perfect score!</h2>
+              
+                <button class='btn' onclick ='location.reload()'>Restart</button>`
                 img2.src = '../assets/images/excellent.png'
                 bodyContainer.appendChild(img2).classList.add('img-left')
 
