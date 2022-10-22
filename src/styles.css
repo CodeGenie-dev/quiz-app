@@ -10,6 +10,10 @@
   box-sizing: border-box;
   font-family: 'akbar_plain', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+
+html {
+  height: -webkit-fill-available;
+}
 :root {
   --hue-neutral: 550;
   --hue-wrong: 0;
@@ -21,6 +25,7 @@ body {
   margin: 0;
   width: 100vw;
   height: 100vh;
+  height: -webkit-fill-available;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -140,6 +145,11 @@ video {
   height: 100vh;
   overflow: hidden;
 }
+@media only screen and (max-width: 830px) {
+  video {
+    display: none;
+  }
+}
 @media only screen and (max-width: 450px) {
   .question-container {
     margin-top: -30px;
@@ -155,5 +165,11 @@ video {
   }
   .radio-container {
     font-size: 0.9rem;
+  }
+}
+
+@media only screen and (max-width: 300px) {
+  .container {
+    margin-bottom: 80px;
   }
 }

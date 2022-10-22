@@ -441,7 +441,7 @@ nextBtn.addEventListener('click', () => {
                 }, 1000);
             } else if (score == 20) {
                 questionContainer.innerHTML = `
-                <h1>CONGRATULATIONS!!! 🏆</h1>
+                <h1>CONGRATS!!! 🏆</h1>
                 <h2>You acheived a perfect score!</h2>
               
                 <button class='btn' onclick ='location.reload()'>Restart</button>`
